@@ -1,6 +1,9 @@
 package com.example.aiyang.allhttp_networkrequestdemo.http;
 
+import com.example.aiyang.allhttp_networkrequestdemo.model.AllDataSyncJson;
 import com.example.aiyang.allhttp_networkrequestdemo.model.GankBean;
+import com.example.aiyang.allhttp_networkrequestdemo.model.LoginJson;
+import com.example.aiyang.allhttp_networkrequestdemo.model.Translation1;
 import com.example.aiyang.allhttp_networkrequestdemo.model.User;
 
 import java.util.Map;
@@ -9,6 +12,8 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -39,7 +44,6 @@ public interface ApiManager {
     @GET("onebox/weather/query?")
     Call<ResponseBody> getWeather2(@QueryMap Map<String,String > parmas);
 
-
     //二、Post
     /**
      * 表单
@@ -49,6 +53,22 @@ public interface ApiManager {
      */
     @POST("user/info")
     Call<ResponseBody> editUser(@Field("id") int id,@Field("name") String name);
+
+    @FormUrlEncoded
+    @POST("api/fieldParam")
+    Call<ResponseBody> postFieldFun(@Field("key") String key);
+
+    @POST("translate?doctype=json&jsonversion=&type=&keyfrom=&model=&mid=&imei=&vendor=&screen=&ssid=&network=&abtest=")
+    @FormUrlEncoded
+    Call<Translation1> getCall(@Field("i") String targetSentence);
+
+    @FormUrlEncoded
+    @POST("token")
+    Call<LoginJson> getToken(@FieldMap Map<String, String> params);
+
+    @FormUrlEncoded
+    @POST("face/fullSync")
+    Call<AllDataSyncJson> getAllDataSync(@Field("deviceID") String params);
 
     //三、RxJava
 

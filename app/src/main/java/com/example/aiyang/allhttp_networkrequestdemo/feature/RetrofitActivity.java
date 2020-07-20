@@ -1,13 +1,17 @@
 package com.example.aiyang.allhttp_networkrequestdemo.feature;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.aiyang.allhttp_networkrequestdemo.R;
 import com.example.aiyang.allhttp_networkrequestdemo.http.ApiManager;
+import com.example.aiyang.allhttp_networkrequestdemo.model.AllDataSyncJson;
 import com.example.aiyang.allhttp_networkrequestdemo.model.GankBean;
+import com.example.aiyang.allhttp_networkrequestdemo.model.LoginJson;
+import com.example.aiyang.allhttp_networkrequestdemo.model.Translation1;
 import com.example.aiyang.allhttp_networkrequestdemo.ui.TopBarBaseActivity;
 import com.example.aiyang.allhttp_networkrequestdemo.util.ToastUtil;
 
@@ -27,6 +31,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class RetrofitActivity extends TopBarBaseActivity implements View.OnClickListener{
+
+    private String TAG = "RetrofitActivity";
+
     Button retrofit_get;
     Button retrofit_get2;
     Button retrofit_post3;
@@ -137,26 +144,38 @@ public class RetrofitActivity extends TopBarBaseActivity implements View.OnClick
     }
 
     private void retrofit_post(){
-        Retrofit retrofit =new Retrofit.Builder()
-                        .baseUrl("")
+        Retrofit retrofit =new Retrofit
+                        .Builder()
+                        .baseUrl("https://api-dev.bs.timework.cn/oauth/oauth/")
+                        .addConverterFactory(GsonConverterFactory.create())
                         .build();
+
+        final Map<String, String> map = new HashMap<>();
+        map.put("grant_type", "client_credentials");
+        map.put("client_id", "smart_guard_app");
+        map.put("client_secret", "timework_1688");
+
         ApiManager apiManager =retrofit.create(ApiManager.class);
-        apiManager.editUser(2,"myname").enqueue(new Callback<ResponseBody>() {
+        apiManager.getToken(map).enqueue(new Callback<LoginJson>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    if (response.body().string()!=""){
-                        ToastUtil.Show(RetrofitActivity.this,"成功");
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            public void onResponse(Call<LoginJson> call, Response<LoginJson> response) {
+//                try {
+//                    if (response.body().string()!=""){
+//                        ToastUtil.Show(RetrofitActivity.this,"成功");
+//                    }
+                    String str = new String(response.body().scope);
+                    Log.i(TAG, "onResponse: " + str);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+            public void onFailure(Call<LoginJson> call, Throwable t) {
+                System.out.println("请求失败");
+                System.out.println(t.getMessage());
             }
+
         });
     }
 
