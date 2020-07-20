@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/Users/djmsh/Desktop/demo/NetworkRequestDemo/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="69e4643cc39fe8ac5b44d09f45359b1da0a66434">
+        <dex dex="/Users/djmsh/Desktop/demo/NetworkRequestDemo/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_3da0f97d00b52456fa7e20f058970f5ddbe08951/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/djmsh/Desktop/demo/NetworkRequestDemo/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="/Users/djmsh/Desktop/demo/NetworkRequestDemo/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_16694b7ed719c4ac0b1ad3fe4738ffd7b7b99f32/classes.dex" />
+    </item>
+
+</items>
