@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.example.aiyang.allhttp_networkrequestdemo.R;
 import com.example.aiyang.allhttp_networkrequestdemo.http.ApiManager;
 import com.example.aiyang.allhttp_networkrequestdemo.model.AllDataSyncJson;
+import com.example.aiyang.allhttp_networkrequestdemo.model.DeviceConnectJson;
 import com.example.aiyang.allhttp_networkrequestdemo.model.GankBean;
 import com.example.aiyang.allhttp_networkrequestdemo.model.LoginJson;
 import com.example.aiyang.allhttp_networkrequestdemo.model.Translation1;
@@ -143,35 +144,61 @@ public class RetrofitActivity extends TopBarBaseActivity implements View.OnClick
         });
     }
 
+    /**
+     * 有道
+     */
+//    http://fanyi.youdao.com/
+
+    /**
+     * 闸机
+     */
+//    http://192.168.6.222:8010/api/v1/hardware/
+
+    /**
+     * 门禁Token
+     */
+//    https://api-dev.bs.timework.cn/
+
+
     private void retrofit_post(){
         Retrofit retrofit =new Retrofit
                         .Builder()
-                        .baseUrl("https://api-dev.bs.timework.cn/oauth/oauth/")
+                        .baseUrl("http://192.168.6.222:8010/api/v1/hardware/")
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
 
+//        final Map<String, String> map = new HashMap<>();
+//        map.put("grant_type", "client_credentials");
+//        map.put("client_id", "smart_guard_app");
+//        map.put("client_secret", "timework_1688");
+
         final Map<String, String> map = new HashMap<>();
-        map.put("grant_type", "client_credentials");
-        map.put("client_id", "smart_guard_app");
-        map.put("client_secret", "timework_1688");
+        map.put("deviceID","ZJDevice001");
+//        map.put("storeId","726897922775449600");
+//        map.put("params","123456");
 
         ApiManager apiManager =retrofit.create(ApiManager.class);
-        apiManager.getToken(map).enqueue(new Callback<LoginJson>() {
+        apiManager.getAllDataSync3(map).enqueue(new Callback<AllDataSyncJson>() {
             @Override
-            public void onResponse(Call<LoginJson> call, Response<LoginJson> response) {
+            public void onResponse(Call<AllDataSyncJson> call, Response<AllDataSyncJson> response) {
 //                try {
 //                    if (response.body().string()!=""){
 //                        ToastUtil.Show(RetrofitActivity.this,"成功");
 //                    }
-                    String str = new String(response.body().scope);
-                    Log.i(TAG, "onResponse: " + str);
+                String str = null;
+//                try {
+                    str = new String( response.body().dataSync.listData.toString());
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+                Log.i(TAG, "onResponse: " + str);
 //                } catch (IOException e) {
 //                    e.printStackTrace();
 //                }
             }
 
             @Override
-            public void onFailure(Call<LoginJson> call, Throwable t) {
+            public void onFailure(Call<AllDataSyncJson> call, Throwable t) {
                 System.out.println("请求失败");
                 System.out.println(t.getMessage());
             }

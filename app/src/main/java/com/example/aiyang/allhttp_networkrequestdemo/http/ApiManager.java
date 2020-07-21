@@ -1,6 +1,7 @@
 package com.example.aiyang.allhttp_networkrequestdemo.http;
 
 import com.example.aiyang.allhttp_networkrequestdemo.model.AllDataSyncJson;
+import com.example.aiyang.allhttp_networkrequestdemo.model.DeviceConnectJson;
 import com.example.aiyang.allhttp_networkrequestdemo.model.GankBean;
 import com.example.aiyang.allhttp_networkrequestdemo.model.LoginJson;
 import com.example.aiyang.allhttp_networkrequestdemo.model.Translation1;
@@ -63,12 +64,49 @@ public interface ApiManager {
     Call<Translation1> getCall(@Field("i") String targetSentence);
 
     @FormUrlEncoded
-    @POST("token")
+    @POST("oauth/oauth/token")
     Call<LoginJson> getToken(@FieldMap Map<String, String> params);
+
+    /**
+     * 设备数据全量同步
+     * @param params
+     * @return
+     */
 
     @FormUrlEncoded
     @POST("face/fullSync")
     Call<AllDataSyncJson> getAllDataSync(@Field("deviceID") String params);
+
+    @FormUrlEncoded
+    @POST("face/fullSync")
+    Call<ResponseBody> getAllDataSync1(@Field("deviceID") String params);
+
+    @FormUrlEncoded
+    @POST("face/fullSync")
+    Call<ResponseBody> getAllDataSync2(@FieldMap Map<String, String> params);
+
+    @FormUrlEncoded
+    @POST("face/fullSync")
+    Call<AllDataSyncJson> getAllDataSync3(@FieldMap Map<String, String> params);
+
+    /**
+     * 冰场设备通行验证
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("code/crossing")
+    Call<DeviceConnectJson> getDeviceConnect(@FieldMap Map<String, String> params);
+
+    @FormUrlEncoded
+    @POST("translate?doctype=json&jsonversion=&type=&keyfrom=&model=&mid=&imei=&vendor=&screen=&ssid=&network=&abtest=")
+    Call<ResponseBody> getCall1(@Field("i") String targetSentence);
+
+    @FormUrlEncoded
+    @POST("oauth/oauth/token")
+    Call<ResponseBody> getToken1(@FieldMap Map<String, String> params);
+
+
 
     //三、RxJava
 
